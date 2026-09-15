@@ -1,10 +1,10 @@
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+
+
 import { userRouter } from "./routes/userRoutes.js";
 import { productRouter } from "./routes/productRoutes.js";
-
-dotenv.config();
 
 const atlas_string = process.env.ATLAS_STRING;
 

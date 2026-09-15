@@ -1,6 +1,6 @@
 import productModel from "../model/productModel.js";
 import userModel from "../model/userModel.js";
-
+import cloudinary from "../config/cloudinary.js";
 // Create/Upload a new product
 
 /*
@@ -45,6 +45,15 @@ export const uploadProduct = async (req, res) => {
       image
     } = req.body;
 
+    if(!req.file){
+      return res.status(400).json({
+        message: "Image is required... please upload an image"
+      });
+    };
+
+    const result =  await cloudinary.uploader.upload(req.file.path);
+    const imageUrl =  result.secure_url;
+
     const product = await productModel.create({
       name,
       description,
@@ -52,7 +61,7 @@ export const uploadProduct = async (req, res) => {
       category,
       stock,
       quantity,
-      image,
+      image: imageUrl,
       user: userId
     });
 
